@@ -1,0 +1,20 @@
+body{
+    background-image: url('../src/assets/vitalii-mazur-Sz-jGntyJMw-unsplash.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    width: 100svh;
+    height: 100svh;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+
+    .mortage-container{
+        background-color: #fff3;
+        border-radius: 10px;
+        backdrop-filter: blur(5px);
+        padding:  30px 70px;
+        color: #fff;
+    }
+}
