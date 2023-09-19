@@ -33,7 +33,7 @@ function Hypotheek() {
         const enteredPostalCode = parseInt(postalCode);
 
         if (restrictedPostalCodes.includes(enteredPostalCode)) {
-          setMortgageMessage('Mortgage not available for your postal code.');
+          alert('Mortgage not available for your postal code.');
           return;
         }
 
@@ -143,6 +143,7 @@ function Hypotheek() {
             </div>
           </div>
         )}
+        
       </>
     );
 }
