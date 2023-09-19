@@ -1,5 +1,5 @@
 import './App.scss'
-import Hypotheek from './components/Hypotheek'
+import Hypotheek from './components/HypotheekCalc'
 
 function App() {
   return (
