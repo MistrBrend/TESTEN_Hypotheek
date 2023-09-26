@@ -5,16 +5,11 @@ import { vi, describe, it, expect } from 'vitest';
 describe('HypotheekCalc', () => {
   describe('calculateTotalPayments()', () => {
     it('should calculate the total payments correctly', () => {
-      vi.mock('./HypotheekCalc', async () => {
-        const actual = await vi.importActual('./HypotheekCalc');
-        return {
-          ...actual,
-          calculateTotalPayments: vi.fn(() => 100000),
-        };
-      });
+      vi.mock('./HypotheekCalc', () => ({
+        calculateTotalPayments: vi.fn(() => 100000),
+      }));
 
       const totalPayments = HypotheekCalc.calculateTotalPayments();
-
       expect(totalPayments).toBe(100000);
     });
   });
