@@ -38,14 +38,14 @@ function Hypotheek() {
         }
 
         if (isNaN(loan)) {
-            // Handle invalid input
             alert('Please enter a valid loan amount.');
             return;
         }
 
         // Calculate total payments
-        const total =
-            ((loan * interestRate) / 12) * 12 * parseInt(selectedFixedRatePeriod);
+        const total = calculateTotalPayments(
+          ((loan * interestRate) / 12) * 12 * parseInt(selectedFixedRatePeriod)
+        );
 
         setTotalPayments(total);
     };
