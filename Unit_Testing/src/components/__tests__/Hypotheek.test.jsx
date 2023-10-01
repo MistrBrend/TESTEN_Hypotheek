@@ -13,13 +13,13 @@ const MinimumRequirements = {
   MaxLoanIncomeMultiplier: 4.25,
 
   InterestRates: {
-    '1 year': 0.02,
-    '5 years': 0.03,
-    '10 years': 0.035,
-    '20 years': 0.045,
-    '30 years': 0.05,
-  }
-}
+    ONE_YEAR: 0.02,
+    FIVE_YEARS: 0.03,
+    TEN_YEARS: 0.035,
+    TWENTY_YEARS: 0.045,
+    THIRTY_YEARS: 0.05,
+  },
+};
 
 // Function to calculate max loan
 function calculateMaxLoan(annualIncome, partnerIncome, hasPartner) {
