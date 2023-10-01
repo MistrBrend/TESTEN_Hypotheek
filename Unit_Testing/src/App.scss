@@ -7,9 +7,9 @@ body{
     overflow-x: hidden;
     display: flex;
     justify-content: center;
-    margin-top: 100px;
+    margin: 100px 0;
     transition: all 0.5s ease-in-out;
-    height: 100vh;
+    min-height: 100vh;
 
     .mortage-con{
         position: relative;
@@ -25,7 +25,7 @@ body{
         &::before {
             content: "";
             position: absolute;
-            top: 0px; /* Position it just above the container */
+            top: 0px; 
             left: 0px;
             right: 0px;
             bottom: 0px;
@@ -42,13 +42,9 @@ body{
                 &.optional{
                     label{ font-style: italic; }
                     input[type="checkbox"] {
-                        /* Add if not using autoprefixer */
                         -webkit-appearance: none;
-                        /* Remove most all native input styles */
                         appearance: none;
-                        /* For iOS < 15 */
                         background-color: var(--form-background);
-                        /* Not removed via appearance */
                         margin: 0;
                         font: inherit;
                         color: currentColor;
@@ -70,7 +66,6 @@ body{
                         transform-origin: bottom left;
                         transition: 120ms transform ease-in-out;
                         box-shadow: inset 1em 1em var(--form-control-color);
-                        /* Windows High Contrast Mode */
                         background-color: #fff;
                     }
                     input[type="checkbox"]:checked::before {
@@ -125,7 +120,7 @@ body{
         }
     }
     .result-con{
-        margin-top: 30px;
+        margin: 30px 0;
         position: relative;
         min-width: 400px;
         background-color: rgba(255, 255, 255, 0);

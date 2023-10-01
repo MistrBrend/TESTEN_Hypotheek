@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import BackgroundImage from '../assets/vitalii-mazur-Sz-jGntyJMw-unsplash.jpg'
 
 
 const MinimumRequirements = {
@@ -44,11 +43,14 @@ function Hypotheek() {
         }
 
         // Calculate total payments
-        const total =
-            ((loan * interestRate) / 12) * 12 * parseInt(selectedFixedRatePeriod);
+        const numPayments = parseInt(selectedFixedRatePeriod);
+        const monthlyInterestRate = interestRate / 12;
+        const monthlyPayment = (loan * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -numPayments));
+        const totalPayments = monthlyPayment * numPayments;
 
-        setTotalPayments(total);
+        setTotalPayments(totalPayments.toFixed(2));
     };
+
 
     return (
       <>
