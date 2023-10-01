@@ -1,30 +1,123 @@
-import * as HypotheekCalc from './HypotheekCalc';
+import { describe, it, expect } from 'vitest';
+import { Hypotheek } from '../HypotheekCalc';
 
-import { vi, describe, it, expect } from 'vitest';
+const annualIncome = 10000;
+const selectedFixedRatePeriod = '30 years';
+const loanAmount = 200000; // Sample loan amount for testing
+const hasPartner = true; // Sample partner status for testing
+const partnerIncome = 8000; // Sample partner income for testing
+const postalCode = '12345'; // Sample postal code for testing
+const restrictedPostalCodes = [9679, 9681, 9682];
 
-describe('HypotheekCalc', () => {
-  describe('calculateTotalPayments()', () => {
-    it('should calculate the total payments correctly', () => {
-      vi.mock('./HypotheekCalc', () => ({
-        calculateTotalPayments: vi.fn(() => 100000),
-      }));
+const MinimumRequirements = {
+  MaxLoanIncomeMultiplier: 4.25,
 
-      const totalPayments = HypotheekCalc.calculateTotalPayments();
-      expect(totalPayments).toBe(100000);
+  InterestRates: {
+    '1 year': 0.02,
+    '5 years': 0.03,
+    '10 years': 0.035,
+    '20 years': 0.045,
+    '30 years': 0.05,
+  }
+}
+
+// Function to calculate max loan
+function calculateMaxLoan(annualIncome, partnerIncome, hasPartner) {
+  const totalIncome = annualIncome + (hasPartner ? partnerIncome : 0);
+  return totalIncome * MinimumRequirements.MaxLoanIncomeMultiplier;
+}
+
+// Function to calculate interest rate
+function calculateInterestRate(selectedFixedRatePeriod) {
+  return MinimumRequirements.InterestRates[selectedFixedRatePeriod];
+}
+
+// Function to calculate total payments
+function calculateTotalPayments(
+  loanAmount,
+  annualInterestRate,
+  loanTermMonths
+) {
+  const monthlyInterestRate = annualInterestRate / 12;
+  const numberOfPayments = loanTermMonths;
+
+  const monthlyPayment =
+    (loanAmount * monthlyInterestRate) /
+    (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
+
+  const totalPayments = monthlyPayment * numberOfPayments;
+  return totalPayments;
+}
+
+
+
+//   const loan = parseFloat(loanAmount);
+
+
+//   // Calculate total payments
+//   const total = calculateTotalPayments(
+//     ((loan * interestRate) / 12) * 12 * parseInt(selectedFixedRatePeriod)
+//   );
+
+//   setTotalPayments(total);
+// };
+
+
+describe('Hypotheek function', () => {
+  describe('postal code', () => {
+    it('is postal restricted?', () => {
+      expect(restrictedPostalCodes).not.toContain(Number(postalCode));
     });
   });
+  describe('max loan', () => {
+    it('Calculate Max Loan', () => {
+      const expectedMaxLoan =
+        (annualIncome + (hasPartner ? partnerIncome : 0)) *
+        MinimumRequirements.MaxLoanIncomeMultiplier;
 
-  describe('calculateMaxLoanAmount()', () => {
-    it('should calculate the maximum loan amount correctly', () => {
-      const annualIncome = 100000;
+      const calculatedMaxLoan = calculateMaxLoan(
+        annualIncome,
+        partnerIncome,
+        hasPartner
+      );
 
-      vi.mock('./HypotheekCalc', () => ({
-        calculateMaxLoanAmount: vi.fn(() => 425000),
-      }));
+      expect(calculatedMaxLoan).toBe(expectedMaxLoan);
+    });
+  });
+  describe('calculate Interest Rate', () => {
+    it('calculates the interest rate correctly for a given fixed rate period', () => {
+      const expectedInterestRate =
+        MinimumRequirements.InterestRates[selectedFixedRatePeriod];
 
-      const maxLoanAmount = HypotheekCalc.calculateMaxLoanAmount(annualIncome);
+      const calculatedInterestRate = calculateInterestRate(
+        selectedFixedRatePeriod
+      );
 
-      expect(maxLoanAmount).toBe(425000);
+      expect(calculatedInterestRate).toBe(expectedInterestRate);
+    });
+  });
+  describe('Partner', () => {
+    it('Does he have an partner?', () => {
+        expect(hasPartner).toBe(true);
+    });
+  });
+  describe('Total', () => {
+    it('Total payments calculation', () => {
+      const interestRate = MinimumRequirements.InterestRates[selectedFixedRatePeriod];
+      const monthlyInterestRate = interestRate / 12;
+      const numberOfPayments = parseInt(selectedFixedRatePeriod) * 12;
+      const monthlyPayment =
+        (loanAmount * monthlyInterestRate) /
+        (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
+      const expectedTotalPayments = monthlyPayment * numberOfPayments;
+
+      const calculatedTotalPayments = calculateTotalPayments(
+        loanAmount,
+        interestRate,
+        numberOfPayments
+      );
+
+      expect(calculatedTotalPayments).toBe(expectedTotalPayments);
     });
   });
 });
