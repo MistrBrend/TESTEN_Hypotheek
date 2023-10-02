@@ -92,6 +92,8 @@ body{
                     border: none;
                     outline: none;
                     border-bottom: 2px solid #fff;
+                    -webkit-appearance: none;
+                    appearance: none;
                 }
                 select{
                     cursor: pointer;
