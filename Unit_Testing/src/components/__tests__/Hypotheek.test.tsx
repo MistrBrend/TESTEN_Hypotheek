@@ -2,8 +2,6 @@ import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { LoanCalculator } from '../../LoanCalculator';
 
-
-
 const annualIncome = 10000;
 const selectedFixedRatePeriod = '30 years';
 const loanAmount = 200000; 
